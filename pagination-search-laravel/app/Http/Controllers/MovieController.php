@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
     public function index()
     {
-        $movie = Movie::select('*')->paginate(5);
         
 
-        return view('movie.dashboard', ['movie'=>$movie]);
+        $movie = Movie::with('genre')->paginate(5);
+        
+        return view('movie.dashboard', compact('movie'));
     }
 
     public function add()
@@ -24,7 +26,7 @@ class MovieController extends Controller
         $movie = new Movie;
         $movie->judul = $request->judul;
         $movie->tanggal = $request->tanggal;
-        $movie->genre = $request->genre;
+        $movie->genre_id = $request->genre_id;
         $movie->rating = $request->rating;
         $movie->save();
 
@@ -42,7 +44,7 @@ class MovieController extends Controller
         $movie = Movie::find($id);
         $movie->judul = $request->judul;
         $movie->tanggal = $request->tanggal;
-        $movie->genre = $request->genre;
+        $movie->genre_id = $request->genre_id;
         $movie->rating = $request->rating;
 
         if($movie->save())

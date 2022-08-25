@@ -17,10 +17,11 @@ return new class extends Migration
             $table->increments('id');
             $table->string('judul');
             $table->date('tanggal');
-            $table->string('genre');
+            $table->unsignedBigInteger('genre_id')->nullable();
             $table->float('rating');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('genre_id')->references('genre_id')->on('genres')->onUpdate('cascade');
         });
     }
 

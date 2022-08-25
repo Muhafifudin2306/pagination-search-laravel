@@ -48,16 +48,18 @@
                     @endif
 
 
-                    @foreach ($movie as $mov)
+                    @foreach ($movie as $item)
                         <tr>
-                            <td> {{ $mov->judul }} </td>
-                            <td> {{ $mov->tanggal }} </td>
-                            <td> {{ $mov->genre }} </td>
-                            <td> {{ $mov->rating }} </td>
+                            <td> {{ $item->judul }} </td>
+                            <td> {{ $item->tanggal }} </td>
+                            <td> {{ $item->genre->nama }} </td>
+                            <td> {{ $item->rating }} </td>
+
+
                             <td class="d-flex justify-content-center">
 
 
-                                <form method="GET" action="{{ route('edit-movie', $mov->id) }}"
+                                <form method="GET" action="{{ route('edit-movie', $item->id) }}"
                                     style="margin-right:10px">
                                     @csrf
                                     <input type="hidden" value="EDIT" name="_method">
@@ -67,7 +69,7 @@
 
 
                                 <form method="POST" onsubmit="return confirm('Move data to trash?')"
-                                    action="{{ route('destroy', [$mov->id]) }}">
+                                    action="{{ route('destroy', [$item->id]) }}">
                                     @csrf
                                     <input type="hidden" value="DELETE" name="_method">
                                     <input type="submit" value="Delete" class="btn btn-danger">
