@@ -16,6 +16,7 @@ use App\Http\Controllers\MovieController;
 
 
 Route::get('/', [MovieController::class, 'index'])->name('index-movie');
+Route::get('/search', [MovieController::class, 'search'])->name('search');
 Route::get('/add', [MovieController::class, 'add'])->name('add-page');
 Route::post('/addmovie', [MovieController::class, 'addmovie'])->name('add-movie');
 Route::get('/edit/{id}', [MovieController::class, 'edit'])->name('edit-movie');

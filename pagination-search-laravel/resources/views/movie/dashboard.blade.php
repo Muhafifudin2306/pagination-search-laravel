@@ -24,15 +24,21 @@
                 <h4> Daftar Film Tontonan Saya </h4>
             </div>
         </div>
-        <div id="button-add" style="margin-top: 50px">
-            <a href="/add" class="btn btn-success"> +Tambah Film </a>
-        </div>
+
+        <form action="{{ route('search') }}" class="d-flex justify-content-end" method="get">
+            <input class="form-control me-2" name="search" type="search" placeholder="Search" style="width: 300px"
+                value="{{ request('search') }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
-    <div id="table-body" style="margin-top: 30px">
+
+    </div>
+    <div id="table-body" style="margin-top: 10px">
         <div class="container col-lg-8">
             <table class="table table-bordered align-middle">
                 <thead class="table table-primary">
                     <tr style="text-align: center">
+                        <th width="50px">#</th>
                         <th width="200px">Judul</th>
                         <th width="100px">Tanggal Rilis</th>
                         <th width="100px">Genre</th>
@@ -48,10 +54,11 @@
                     @endif
 
 
-                    @foreach ($movie as $item)
+                    @foreach ($movie as $index => $item)
                         <tr>
+                            <td align="center"> {{ $index + $movie->firstItem() }} </td>
                             <td> {{ $item->judul }} </td>
-                            <td> {{ $item->tanggal }} </td>
+                            <td> {{ date('d-m-Y', strtotime($item->tanggal)) }} </td>
                             <td> {{ $item->genre->nama }} </td>
                             <td> {{ $item->rating }} </td>
 
@@ -85,14 +92,22 @@
 
         </div>
         </tbody>
-
+        <div class="d-flex justify-content-center">
+            <div id="button-add">
+                <a href="/add" class="btn btn-success"style="width:400px"> +Tambah Film
+                </a>
+            </div>
+        </div>
     </div>
     </div>
-    <div class="container col-lg-8">
+    <div id="pagination" style="margin-top:30px">
+        <div class="container col-lg-8">
 
-        {{ $movie->links() }}
+            {{ $movie->links() }}
 
+        </div>
     </div>
+
 </body>
 
 </html>

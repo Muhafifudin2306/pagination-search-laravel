@@ -36,8 +36,13 @@
                     <input type="date" class="form-control" name="tanggal" value="{{ $movie->tanggal }}"">
                 </div>
                 <div class="mb-3">
-                    <label for="genre" class="form-label">Genre</label>
-                    <input type="text" class="form-control" name="genre" value="{{ $movie->genre }}"">
+                    <label for="total" class="form-label">Genre</label>
+                    <select class="form-select" aria-label="Default select example" name="genre_id">
+                        <option selected disabled>-- Pilih Genre --</option>
+                        @foreach ($genre as $gen)
+                            <option value="{{ $gen->genre_id }}">{{ ucfirst($gen->nama) }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="rating" class="form-label">Rating</label>

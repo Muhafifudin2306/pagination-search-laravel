@@ -12,14 +12,22 @@ class MovieController extends Controller
     {
         
 
-        $movie = Movie::with('genre')->paginate(5);
+        $movie = Movie::with('genre')->latest()->paginate(5);
         
         return view('movie.dashboard', compact('movie'));
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->search;
+        $movie = Movie::where('judul', 'like', "%" . $keyword . "%")->paginate(5);
+        return view('movie.dashboard', compact('movie'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
     public function add()
     {
-        return view('movie.add');
+        $genre = Genre::All();
+        return view('movie.add', compact('genre'));
     }
     public function addmovie(Request $request)
     {
@@ -34,9 +42,10 @@ class MovieController extends Controller
     }
     public function edit($id)
     {
-        $movie = Movie::findOrFail($id);
+        $genre = Genre::all();
+        $movie = Movie::with('genre')->findOrFail($id);
 
-        return view('movie.edit', compact('movie'));
+        return view('movie.edit', compact('movie', 'genre'));
     }
 
     public function update(Request $request, $id)
