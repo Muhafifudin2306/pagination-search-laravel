@@ -40,7 +40,9 @@
                     <select class="form-select" aria-label="Default select example" name="genre_id">
                         <option selected disabled>-- Pilih Genre --</option>
                         @foreach ($genre as $gen)
-                            <option value="{{ $gen->genre_id }}">{{ ucfirst($gen->nama) }}</option>
+                            <option value="{{ $gen->genre_id }}"
+                                {{ $gen->genre_id == $movie->genre_id ? 'selected' : '' }}>{{ ucfirst($gen->nama) }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
