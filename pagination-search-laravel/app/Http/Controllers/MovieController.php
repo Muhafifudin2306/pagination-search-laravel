@@ -5,15 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Movie;
 use App\Models\Genre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MovieController extends Controller
 {
     public function index()
     {
-        
-
         $movie = Movie::with('genre')->latest()->paginate(5);
-        
+
+        return view('movie.dashboard', compact('movie'));
+    }
+
+    public function asc()
+    {
+        $movie = Movie::with('genre')->orderBy('tanggal','ASC')->paginate(5);
+
+        return view('movie.dashboard', compact('movie'));
+    }
+
+    public function desc()
+    {
+        $movie = Movie::with('genre')->orderBy('tanggal','DESC')->paginate(5);
+
         return view('movie.dashboard', compact('movie'));
     }
 
@@ -56,13 +70,10 @@ class MovieController extends Controller
         $movie->genre_id = $request->genre_id;
         $movie->rating = $request->rating;
 
-        if($movie->save())
-        {
+        if ($movie->save()) {
             return redirect('/');
-        }
-        else
-        {
-            return redirect()->back()->with('message','Gagal Mengedit Data');
+        } else {
+            return redirect()->back()->with('message', 'Gagal Mengedit Data');
         }
     }
 
@@ -70,7 +81,7 @@ class MovieController extends Controller
     {
         $movie = Movie::findOrFail($id);
         $movie->delete();
-        
+
         return redirect('/');
     }
 }

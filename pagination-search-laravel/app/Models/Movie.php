@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Movie extends Model
 {
@@ -15,7 +16,9 @@ class Movie extends Model
         'genre_id',
         'rating',
         'created_at',
-        'update_at'
+        'update_at',
+        'bulan',
+        'tahun'
     ];
 
     public function genre()
